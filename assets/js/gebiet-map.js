@@ -38,7 +38,7 @@
       radius: isStadtteil ? 7 : 8, color: '#fff', weight: 2,
       fillColor: isStadtteil ? '#B85234' : '#2E7D5B', fillOpacity: .95
     }).addTo(map);
-    m.bindPopup('<b>' + o.n + '</b><br><a href="/haushaltshilfe-' + o.s + '/">Haushaltshilfe in ' + o.n + ' &rarr;</a>');
+    m.bindPopup('<b>' + o.n + '</b><br><a href="../haushaltshilfe-' + o.s + '/">Haushaltshilfe in ' + o.n + ' &rarr;</a>');
     m.bindTooltip(o.n, { direction: 'top', offset: [0, -6] });
     bounds.push([o.lat, o.lng]);
   });

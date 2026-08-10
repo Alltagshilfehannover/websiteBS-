@@ -195,8 +195,8 @@
       + '<div class="pgc-scale" aria-hidden="true">' + scale + '</div>'
       + budgetHtml
       + '<div class="pgc-cta">'
-      +   '<a class="btn btn--primary btn--lg" href="/kontakt/">Kostenlos beraten lassen</a>'
-      +   '<a class="btn btn--ghost" href="/rechner/">Alle Leistungen im Rechner</a>'
+      +   '<a class="btn btn--primary btn--lg" href="../kontakt/">Kostenlos beraten lassen</a>'
+      +   '<a class="btn btn--ghost" href="../rechner/">Alle Leistungen im Rechner</a>'
       +   '<button type="button" class="btn btn--ghost pgc-restart">Neu starten</button>'
       + '</div>'
       + '<p class="pgc-disclaimer"><span class="pgc-star">*</span> <b>Simulierte Berechnung.</b> Dies ist eine unverbindliche, vereinfachte Orientierung nach den sechs Modulen des Neuen Begutachtungsassessments (NBA). Sie ersetzt <b>keine</b> ärztliche oder pflegefachliche Begutachtung. Das tatsächliche Ergebnis des Medizinischen Dienstes kann hiervon abweichen – nach oben wie nach unten. ' + (B.stand || '') + '</p>'

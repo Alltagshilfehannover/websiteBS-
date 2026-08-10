@@ -161,7 +161,12 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 
-      // 1) Einwilligung (Pflicht)
+      // 1) Pflichtfelder prüfen. Das Formular trägt novalidate, damit wir die
+      //    Meldungen selbst steuern – die Prüfung muss deshalb hier ausgelöst
+      //    werden, sonst gingen leere Anfragen durch.
+      if (typeof form.reportValidity === 'function' && !form.reportValidity()) return;
+
+      // 2) Einwilligung (Pflicht)
       var consent = form.querySelector('input[type="checkbox"][required]');
       if (consent && !consent.checked) { show(consentBox); consent.focus(); return; }
       hide(consentBox); hide(sendErrBox); hide(okBox);
@@ -202,10 +207,22 @@
         return;
       }
 
-      // 3b) Fallback ohne Backend: E-Mail-Programm öffnen
+      // 3b) Fallback ohne Backend: E-Mail-Programm öffnen.
+      //     Hier NICHT „Anfrage eingegangen" melden – die Anfrage erreicht uns
+      //     erst, wenn der Besucher die vorbereitete E-Mail auch abschickt.
       if (btn) { btn.disabled = true; btn.textContent = 'E-Mail-Programm wird geöffnet …'; }
       window.location.href = mailtoUrl(data);
-      setTimeout(succeed, 900);
+      setTimeout(function () {
+        if (okBox) {
+          var tel = sendErrBox ? sendErrBox.querySelector('a[href^="tel:"]') : null;
+          okBox.innerHTML = 'Ihr E-Mail-Programm wurde mit Ihrer Anfrage geöffnet. '
+            + '<strong>Bitte schicken Sie die E-Mail dort noch ab</strong> – erst dann erreicht sie uns.'
+            + (tel ? ' Klappt das nicht, rufen Sie uns gern an unter ' + tel.outerHTML + '.' : '');
+          show(okBox);
+          okBox.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        }
+        resetBtn();   // Eingaben stehen lassen, falls das Mailprogramm fehlt
+      }, 900);
     });
   }
 
@@ -232,6 +249,8 @@
 
     bwForm.addEventListener('submit', function (e) {
       e.preventDefault();
+      // Pflichtfelder prüfen (das Formular trägt novalidate, siehe Kontaktformular)
+      if (typeof bwForm.reportValidity === 'function' && !bwForm.reportValidity()) return;
       var consent = bwForm.querySelector('input[type="checkbox"][required]');
       var err = $('.form__error', bwForm);
       if (consent && !consent.checked) { if (err) err.style.display = 'block'; consent.focus(); return; }
