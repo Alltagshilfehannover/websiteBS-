@@ -9,6 +9,8 @@
   var cfg = window.SITE_CONFIG || {};
   if (!cfg.SUPABASE_URL || !cfg.SUPABASE_ANON_KEY) return;         // erst nach Einrichtung aktiv
   if (!cfg.SITE_KEY) return;                                       // ohne Website-Schlüssel lehnt die DB ab
+  // Eigene Besuche ausblenden – Schalter sitzt im Statistik-Dashboard.
+  try { if (localStorage.getItem('ah_no_track') === '1') return; } catch (e) {}
   if (navigator.doNotTrack === '1' || window.doNotTrack === '1') return; // „Do Not Track" respektieren
 
   var ref = '', refHost = '';
